@@ -4,7 +4,7 @@ package cn.edu.pku.yangguanbin.yangguanbin.bean;
  * Created by yangg on 2018/10/4.
  */
 
-public class City {/*
+public class City {
     private String province;
     private String city;
     private String number;
@@ -21,14 +21,14 @@ public class City {/*
         this.allPY = allPY;
         this.allFristPY = allFristPY;
     }
-*/
-    /*public String getProvince() {return  province;}
-    public String getCity(){return city;}
+
+    public String getProvince() {return  province;}
+    public String getCity() {return city;}
     public String getNumber(){return number;}
     public String  getFirstPY(){return firstPY;}
     public String   getAllPY(){return allPY;}
     public String  getAllFristPY(){return allFristPY;}
-    */
+
 
 
 }

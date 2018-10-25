@@ -14,14 +14,16 @@ import java.util.List;
 import cn.edu.pku.yangguanbin.yangguanbin.bean.City;
 import cn.edu.pku.yangguanbin.yangguanbin.db.CityDB;
 
+import static android.R.attr.tag;
+
 /**
  * Created by yangg on 2018/10/4.
  */
 
-public class MyApplication extends Application {/*
+public class MyApplication extends Application {
     private static final String TAG = "MyAPP";
 
-    private static MyApplication myApplication;
+    private static MyApplication mApplication;
     private CityDB mCityDB;
 
     private List<City> mCityList;
@@ -31,11 +33,10 @@ public class MyApplication extends Application {/*
         super.onCreate();
         Log.d(TAG, "MyApplication->Oncreate");
 
-        myApplication = this;
+        mApplication = this;
         mCityDB = openCityDB();
         initCityList();
-    }
-
+        }
     private void initCityList() {
         mCityList = new ArrayList<City>();
         new Thread(new Runnable() {
@@ -52,23 +53,22 @@ public class MyApplication extends Application {/*
         int i = 0;
         for (City city : mCityList) {
             i++;
-           // String cityName = city.getCity();
-           // String cityCode = city.getNumber();
-            //Log.d(TAG, cityCode + ":" + cityName);
+            String cityName = city.getCity();
+            String cityCode = city.getNumber();
+            Log.d(TAG, cityCode + ":" + cityName);
         }
         Log.d(TAG, "i=" + i);
         return true;
     }
 
     public List<City> getCityList() {
+        
         return mCityList;
     }
 
-
     public static MyApplication getInstance() {
-        return myApplication;
-    }
-
+           return mApplication;
+        }
     private CityDB openCityDB() {
         String path = "/data"
                 + Environment.getDataDirectory().getAbsolutePath()
@@ -108,6 +108,10 @@ public class MyApplication extends Application {/*
         }
         return new CityDB(this, path);
     }
-
-*/
 }
+
+
+
+
+
+
