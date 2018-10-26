@@ -11,6 +11,7 @@ import cn.edu.pku.yangguanbin.yangguanbin.bean.City;
 
 /**
  * Created by yangg on 2018/10/4.
+ *处理城市列表数据模块
  */
 
 public class CityDB {

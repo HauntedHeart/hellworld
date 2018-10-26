@@ -47,6 +47,8 @@ public class MainActivity extends Activity implements View.OnClickListener {
     private String Now_CityName="北京";
     private String Now_CityCode="101010100";
 
+
+    //Handler模块，用来传递天气信息
     private Handler mHandler = new Handler(){
         public void handleMessage(android.os.Message msg) {
             switch (msg.what) {
@@ -88,7 +90,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
         queryWeatherCode(Now_CityCode);
     }
 
-
+//首页天气信息初始化
     void initView() {
         city_name_Tv = (TextView) findViewById(R.id.title_city_name);
         cityTv = (TextView) findViewById(R.id.city);
@@ -120,9 +122,9 @@ public class MainActivity extends Activity implements View.OnClickListener {
      */
     private void queryWeatherCode(String cityCode) {
         final String address = "http://wthrcdn.etouch.cn/WeatherApi?citykey=" + cityCode;
-
-       // final String address = "http://www.baidu.com";
         Log.d("myWeather", address);
+
+        //次线程，用来获取处理网络上的天气数据
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -158,7 +160,6 @@ public class MainActivity extends Activity implements View.OnClickListener {
 
                     }
 
-
                 } catch (Exception e) {
                     e.printStackTrace();
                 } finally {
@@ -173,21 +174,22 @@ public class MainActivity extends Activity implements View.OnClickListener {
     }
 
 
+    //为title_city_manager添加响应事件
     @Override
     public void onClick(View view) {
         if (view.getId() == R.id.title_city_manager) {
             Intent i = new Intent(MainActivity.this, SelectCity.class);
-            i.putExtra("city",Now_CityName);
-            i.putExtra("code",Now_CityCode);
+            i.putExtra("city",Now_CityName);    //要求携带消息
+            i.putExtra("code",Now_CityCode);    //
             startActivityForResult(i,1);
         }
 
-
+        //为title_update_btn添加响应事件
         if (view.getId() == R.id.title_update_btn) {
-            SharedPreferences sharedPreferences = getSharedPreferences("config", MODE_PRIVATE);
+            SharedPreferences sharedPreferences = getSharedPreferences("config", MODE_PRIVATE);   //使用SharedPreferences存储城市代码信息
             String cityCode = sharedPreferences.getString("main_city_code", "101010200");
             Log.d("myWeather", cityCode);
-//
+
             if (NetUtil.getNetworkState(this) != NetUtil.NETWORN_NONE) {
                 Log.d("myWeather", "网络OK");
                 queryWeatherCode(Now_CityCode);
@@ -199,7 +201,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
         }
     }
 
-
+   //解析网页XML的天气数据
     private TodayWeather parseXML(String xmldata) {
         TodayWeather todayWeather = null;
         int fengxiangCount = 0;
@@ -297,6 +299,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
          return todayWeather;
     }
 
+    //根据返回的数据更新城市代码
     protected void onActivityResult(int requestCode,int resultCode,Intent data){
         if(requestCode==1&&resultCode==RESULT_OK){
             String newCityCode=data.getStringExtra("CityCode");
@@ -308,13 +311,11 @@ public class MainActivity extends Activity implements View.OnClickListener {
                 Log.d("myWeather", "网络挂了");
                 Toast.makeText(MainActivity.this, "网络挂了！", Toast.LENGTH_LONG).show();
             }
-
-
-            }
-
         }
 
+    }
 
+    //根据解析的网络数据更新天气信息
     void updateTodayWeather(TodayWeather todayWeather) {
         city_name_Tv.setText(todayWeather.getCity() + "天气");
         cityTv.setText(todayWeather.getCity());
@@ -338,7 +339,8 @@ public class MainActivity extends Activity implements View.OnClickListener {
         climateTv.setText(todayWeather.getType());
         windTv.setText("风力:" + todayWeather.getFengli());
 
-        if(todayWeather.getQuality()!=null) {
+        //根据空气质量选择相应图片
+        if(todayWeather.getQuality()!=null) {                   //增加判断PM2.5的质量数据是否存在，防止switch语句判断null值，导致程序崩溃
             switch (todayWeather.getQuality().trim()) {
                 case "优":
                     pmImg.setImageResource(R.drawable.biz_plugin_weather_0_50);
@@ -360,6 +362,8 @@ public class MainActivity extends Activity implements View.OnClickListener {
                     break;
             }
         }
+
+        //根据天气类型选择相应图片
        if(todayWeather.getType()!=null) {
            switch (todayWeather.getType().trim()) {
                case "暴雪":

@@ -6,6 +6,7 @@ import android.net.NetworkInfo;
 
 /**
  * Created by yangg on 2018/10/4.
+ *检查网络连接模块
  */
 
 public class NetUtil {
