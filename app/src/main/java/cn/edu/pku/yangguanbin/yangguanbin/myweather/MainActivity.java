@@ -10,6 +10,7 @@ import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -40,6 +41,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
     private static final int UPDATE_TODAY_WEATHER = 1;
 
     private ImageView mUpdateBtn;
+    private ProgressBar mUpdateProcess;
 
     private TextView cityTv, timeTv, humidityTv, weekTv, pmDataTv, pmQualityTv, temperatureTv, climateTv, windTv, city_name_Tv;
     private ImageView weatherImg, pmImg;
@@ -72,6 +74,9 @@ public class MainActivity extends Activity implements View.OnClickListener {
 
         mUpdateBtn = (ImageView) findViewById(R.id.title_update_btn);
         mUpdateBtn.setOnClickListener(this);
+
+        mUpdateProcess = (ProgressBar) findViewById(R.id.title_update_progress);
+        mUpdateProcess.setOnClickListener(this);
 
 
         if (NetUtil.getNetworkState(this) != NetUtil.NETWORN_NONE) {
@@ -186,19 +191,55 @@ public class MainActivity extends Activity implements View.OnClickListener {
 
         //为title_update_btn添加响应事件
         if (view.getId() == R.id.title_update_btn) {
-            SharedPreferences sharedPreferences = getSharedPreferences("config", MODE_PRIVATE);   //使用SharedPreferences存储城市代码信息
-            String cityCode = sharedPreferences.getString("main_city_code", "101010200");
-            Log.d("myWeather", cityCode);
+//            SharedPreferences sharedPreferences = getSharedPreferences("config", MODE_PRIVATE);   //使用SharedPreferences存储城市代码信息
+//            String cityCode = sharedPreferences.getString("main_city_code", "101010200");
+            mUpdateBtn.setVisibility(View.INVISIBLE);
+            mUpdateProcess.setVisibility(View.VISIBLE);
+            //Log.d("myWeather", cityCode);
 
             if (NetUtil.getNetworkState(this) != NetUtil.NETWORN_NONE) {
                 Log.d("myWeather", "网络OK");
                 queryWeatherCode(Now_CityCode);
-            } else {
+
+                //设置延迟1.5秒后停止旋转更新图标
+                Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        mUpdateBtn.setVisibility(View.VISIBLE);
+                        mUpdateProcess.setVisibility(View.INVISIBLE);
+                    }
+                }, 1800);//1.5秒后执行Runnable中的run方法
+
+            }
+            else {
+                //设置延迟5秒后停止旋转更新图标
+                Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        mUpdateBtn.setVisibility(View.VISIBLE);
+                        mUpdateProcess.setVisibility(View.INVISIBLE);
+                    }
+                }, 5400);//1.5秒后执行Runnable中的run方法
+
                 Log.d("myWeather", "网络挂了");
                 Toast.makeText(MainActivity.this, "网络挂了！", Toast.LENGTH_LONG).show();
             }
-
         }
+
+//        if (view.getId() == R.id.title_update_progress) {
+//            if (NetUtil.getNetworkState(this) != NetUtil.NETWORN_NONE) {
+//                Log.d("myWeather", "网络OK");
+//                queryWeatherCode(Now_CityCode);
+//                mUpdateBtn.setVisibility(View.VISIBLE);
+//                mUpdateProcess.setVisibility(View.INVISIBLE);  }
+//            else {
+//                Log.d("myWeather", "网络挂了");
+//                Toast.makeText(MainActivity.this, "网络挂了！", Toast.LENGTH_LONG).show();
+//            }
+//            queryWeatherCode(Now_CityCode);
+//        }
     }
 
    //解析网页XML的天气数据

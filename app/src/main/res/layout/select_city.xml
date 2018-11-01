@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -37,27 +36,41 @@
             android:gravity="center" />
     </RelativeLayout>
 
+    <TextView
+        android:id="@+id/t"
+        android:layout_below="@id/title_cur_city"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:text="" />
+
+    <EditText
+        android:id="@+id/search_edit"
+        android:layout_width="fill_parent"
+        android:layout_height="40dp"
+        android:layout_below="@id/t"
+        android:layout_margin="5dp"
+        android:background="@drawable/contact_search_box_edittext_keyword_background"
+
+        android:drawableLeft="@drawable/magnifying_glass"
+        android:drawablePadding="8dp"
+
+        android:hint="搜索全国城市"
+        android:imeOptions="actionSearch"
+        android:inputType="text"
+        android:paddingBottom="8dp"
+        android:paddingLeft="8dp"
+        android:paddingRight="30dp"
+        android:paddingTop="8dp"
+        android:singleLine="true"
+        android:textColor="#ff000000"
+        android:textColorHint="#ffcccccc"
+        android:textSize="15dp" />
+
+
     <RelativeLayout
-        android:id="@+id/search_city"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/title_cur_city"
-        android:layout_margin="3dp"
-        android:hint="搜索全国城市"
-        android:drawableLeft="@drawable/magnifying_glass"
-        android:drawablePadding="6dp"
-        android:singleLine="true"
-        android:background="@drawable/contact_search_box_edittext_keyword_background"
-        android:textColor="#fd0000"
-        android:textSize="15dp">
-
-    </RelativeLayout>
-
-
-    <RelativeLayout
-    android:layout_width="fill_parent"
-    android:layout_height="wrap_content"
-    android:layout_below="@id/search_city">
+        android:layout_below="@id/search_edit">
 
         <ListView
             android:id="@+id/title_list"
@@ -67,5 +80,6 @@
 
         </ListView>
     </RelativeLayout>
+
 
 </RelativeLayout>
