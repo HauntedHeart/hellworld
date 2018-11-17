@@ -2,6 +2,9 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+
+
+
     <!--Title Bar -->
     <include
         android:id="@+id/title"
@@ -33,7 +36,48 @@
             </RelativeLayout>
 
             <!--此处放置未来七日天气信息-->
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_below="@id/weather_today"
+            android:id="@+id/weather_future"
+            android:padding="10dp"
+            >
+            <android.support.v4.view.ViewPager
+                android:layout_width="fill_parent"
+                android:layout_height="250dp"
+                android:id="@+id/viewpager">
+            </android.support.v4.view.ViewPager>
 
+            <LinearLayout
+
+                android:id="@+id/indicator"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_horizontal"
+                android:layout_below="@+id/viewpager"
+                >
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/iv13"
+                    android:padding="5dp"
+                    android:src="@drawable/page_indicator_focused"
+                    />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/iv46"
+                    android:padding="5dp"
+                    android:src="@drawable/page_indicator_unfocused"
+                    />
+            </LinearLayout>
+
+
+        </RelativeLayout>
             <!--此处放置其他信息，如广告等-->
 
     </LinearLayout>
